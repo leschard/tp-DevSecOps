@@ -128,3 +128,37 @@ Scan uniquement des vulnérabilités `CRITICAL`
 ```bash
 docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity CRITICAL infoslack/dvwa
 ```
+
+## IV) Restrictions de _capabilities_ dans les containers
+
+Exécutez un container avec l'image `alpine`
+
+```bash
+docker run --rm -it alpine /bin/sh
+```
+
+Quel utilisateur suis-je à l'intérieur du container ?
+Puis-je modifier l'utilisateur propriétaire de `/etc/shadow` ?
+
+```bash
+id
+chown nobody /etc/shadow
+```
+
+Je sors du container en tapant `Contrôle + D`.
+
+Exécutez un container avec l'image `alpine` avec l'option `--cap-drop CHOWN`.
+
+```bash
+docker run --rm -it --cap-drop CHOWN alpine /bin/sh
+```
+
+* `--cap-drop CHOWN` permet de retire les _capabilities_ `CHOWN` (changer de propriétaire).
+
+Quel utilisateur suis-je à l'intérieur du container ?
+Puis-je modifier l'utilisateur propriétaire de `/etc/shadow` ?
+
+```bash
+id
+chown nobody /etc/shadow
+```
