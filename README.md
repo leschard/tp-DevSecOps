@@ -91,7 +91,7 @@ cat /mnt/etc/shadow
 Récupération du scanner Trivy
 
 ```bash
-docker pull aquesecurity/trivy
+docker pull aquasec/trivy
 ```
 
 Récupération d'une image à tester
