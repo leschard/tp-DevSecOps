@@ -97,13 +97,13 @@ docker pull aquasec/trivy
 Récupération d'une image à tester
 
 ```bash
-docker pull infoslack/dvwa
+docker pull alpine:3.9.4
 ```
 
 Scan de l'image par Trivy
 
 ```bash
-docker run --rm -v $PWD:/root/.cache/ aquasec/trivy infoslack/dvwa
+docker run --rm -v $PWD:/root/.cache/ aquasec/trivy alpine:3.9.4
 ```
 
 * `--rm` permet de supprimer le container après éxécution.
@@ -112,7 +112,7 @@ docker run --rm -v $PWD:/root/.cache/ aquasec/trivy infoslack/dvwa
 Scan uniquement des vulnérabilités `HIGH` et `CRITICAL`
 
 ```bash
-docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity HIGH,CRITICAL infoslack/dvwa
+docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity HIGH,CRITICAL alpine:3.9.4
 ```
 
 * `--severity` permet de définir le niveau de sévérité des vulnérabilités à rechercher.
@@ -120,13 +120,13 @@ docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity HIGH,CRITICAL inf
 Scan uniquement des vulnérabilités `HIGH`
 
 ```bash
-docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity HIGH infoslack/dvwa
+docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity HIGH alpine:3.9.4
 ```
 
 Scan uniquement des vulnérabilités `CRITICAL`
 
 ```bash
-docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity CRITICAL infoslack/dvwa
+docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity CRITICAL alpine:3.9.4
 ```
 
 ## IV) Restrictions de _capabilities_ dans les containers
