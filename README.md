@@ -86,6 +86,8 @@ Peut-on afficher les _hashes_ des mots de passe des utilisateurs du système hô
 cat /mnt/etc/shadow
 ```
 
+Pour passer à la suite, je sors du container en tapant `Contrôle + D`.
+
 ## III) Scanner les images des containers
 
 Récupération du scanner Trivy
@@ -131,6 +133,8 @@ docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity CRITICAL alpine:3
 
 ## IV) Restrictions de _capabilities_ dans les containers
 
+### IV.1) Capability CHOWN
+
 Exécutez un container avec l'image `alpine`
 
 ```bash
@@ -162,3 +166,52 @@ Puis-je modifier l'utilisateur propriétaire de `/etc/shadow` ?
 id
 chown nobody /etc/shadow
 ```
+
+### IV.1) Capability NET_RAW
+
+Exécutez un container avec l'image `alpine`
+
+```bash
+docker run --rm -it alpine /bin/sh
+```
+
+J'installe `tcpdump` dans le container.
+
+```bash
+apk add tcpdump
+```
+
+Je lance `tcpdump` en interception de l'interface du container `eth0`
+
+```bash
+tcpdump -i eth0 -vv
+```
+
+Je ferme `tcpdump` en tapant `Contrôle + C`.
+Je sors du container en tapant `Contrôle + D`.
+
+```bash
+docker run --rm -it --cap-drop NET_RAW alpine /bin/sh
+```
+
+J'installe `tcpdump` dans le container.
+
+```bash
+apk add tcpdump
+```
+
+Je lance `tcpdump` en interception de l'interface réseau `eth0` du container.
+Que se passe-t-il ?
+
+```bash
+tcpdump -i eth0
+```
+
+Et pourtant quel utilisateur suis-je ?
+
+```bash
+id
+```
+
+Je ferme `tcpdump` en tapant `Contrôle + C`.
+Je sors du container en tapant `Contrôle + D`.
