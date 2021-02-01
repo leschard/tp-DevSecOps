@@ -2,13 +2,13 @@
 
 ## I) Exécuter un container
 
-Téléchargez l'image `nginx`
+Téléchargez l'image `nginx`.
 
 ```bash
 docker pull nginx
 ```
 
-Lancez le container `nginx`
+Lancez le container `nginx`.
 
 ```bash
 docker run -d -p 80:80 nginx
@@ -18,7 +18,7 @@ docker run -d -p 80:80 nginx
 * `-d` exécute le container en arrière plan.
 * `-p 80:80` permet de _binder_ le port 80 du container sur le port 80 du système hôte.
 
-Envoyez une requête vers le container
+Envoyez une requête vers le container.
 
 ```bash
 curl http://localhost:80
@@ -28,7 +28,7 @@ curl http://localhost:80
 
 ### Préparation de l'environement
 
-Créez un fichier `key` sur le système hôte
+Créez un fichier `key` sur le système hôte.
 
 ```bash
 touch /etc/key
@@ -48,7 +48,7 @@ chmod 600 /etc/key
 
 ### S'échapper du container
 
-Récupérez l'image `alpine` (une distribution Linux légère)
+Récupérez l'image `alpine` (une distribution Linux légère).
 
 ```bash
 docker pull alpine
@@ -60,7 +60,7 @@ Lancez un container à base de l'image `alpine`. La configuration `-v /:/mnt` pe
 docker run -it -v /:/mnt alpine /bin/sh
 ```
 
-(`-it` nous permet d'avoir un terminal dans le container)
+(`-it` nous permet d'avoir un terminal dans le container.)
 
 Allez dans le répertoire `/mnt/etc/` du container (ce qui correspond au répertoire `/etc/` du système hôte grâce au montage `-v /:/mnt` effectué).
 
@@ -90,19 +90,19 @@ Pour passer à la suite, je sors du container en tapant `Contrôle + D`.
 
 ## III) Scanner les images des containers
 
-Récupération du scanner Trivy
+Récupération du scanner Trivy.
 
 ```bash
 docker pull aquasec/trivy
 ```
 
-Récupération d'une image à tester
+Récupération d'une image à tester.
 
 ```bash
 docker pull alpine:3.9.4
 ```
 
-Scan de l'image par Trivy
+Scan de l'image par Trivy.
 
 ```bash
 docker run --rm -v $PWD:/root/.cache/ aquasec/trivy alpine:3.9.4
@@ -111,7 +111,7 @@ docker run --rm -v $PWD:/root/.cache/ aquasec/trivy alpine:3.9.4
 * `--rm` permet de supprimer le container après éxécution.
 * `-v $PWD:/root/.cache/` permet de sauvegarder l'index des vulnérabilités pour éviter d'avoir à le télécharger à chaque nouvelle éxécution.
 
-Scan uniquement des vulnérabilités `HIGH` et `CRITICAL`
+Scan uniquement des vulnérabilités `HIGH` et `CRITICAL`.
 
 ```bash
 docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity HIGH,CRITICAL alpine:3.9.4
@@ -119,13 +119,13 @@ docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity HIGH,CRITICAL alp
 
 * `--severity` permet de définir le niveau de sévérité des vulnérabilités à rechercher.
 
-Scan uniquement des vulnérabilités `HIGH`
+Scan uniquement des vulnérabilités `HIGH`.
 
 ```bash
 docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity HIGH alpine:3.9.4
 ```
 
-Scan uniquement des vulnérabilités `CRITICAL`
+Scan uniquement des vulnérabilités `CRITICAL`.
 
 ```bash
 docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity CRITICAL alpine:3.9.4
@@ -133,9 +133,9 @@ docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity CRITICAL alpine:3
 
 ## IV) Restrictions de _capabilities_ dans les containers
 
-### IV.1) Suppressoin de la _capability_ `CHOWN`
+### IV.1) Suppression de la _capability_ `CHOWN`
 
-Exécutez un container avec l'image `alpine`
+Exécutez un container avec l'image `alpine`.
 
 ```bash
 docker run --rm -it alpine /bin/sh
@@ -157,7 +157,7 @@ Exécutez un container avec l'image `alpine` avec l'option `--cap-drop CHOWN`.
 docker run --rm -it --cap-drop CHOWN alpine /bin/sh
 ```
 
-* `--cap-drop CHOWN` permet de retirer le _capability_ `CHOWN` (changer le propriétaire d'un fichier).
+* `--cap-drop CHOWN` permet de retirer le _capability_ `CHOWN` aux processus exécutés dans le container (changer le propriétaire d'un fichier).
 
 Quel utilisateur suis-je à l'intérieur du container ?
 Puis-je modifier l'utilisateur propriétaire de `/etc/shadow` ?
@@ -167,7 +167,7 @@ id
 chown nobody /etc/shadow
 ```
 
-### IV.1) Suppressoin de la _capability_ `NET_RAW`
+### IV.1) Suppression de la _capability_ `NET_RAW`
 
 Exécutez un container avec l'image `alpine`
 
@@ -181,7 +181,7 @@ J'installe `tcpdump` dans le container.
 apk add tcpdump
 ```
 
-Je lance `tcpdump` en interception de l'interface du container `eth0`
+Je lance `tcpdump` en interception de l'interface du container `eth0`.
 
 ```bash
 tcpdump -i eth0 -vv
@@ -198,7 +198,7 @@ Exécutez un container avec l'image `alpine` avec l'option `--cap-drop NET_RAW`.
 docker run --rm -it --cap-drop NET_RAW alpine /bin/sh
 ```
 
-* `--cap-drop NET_RAW` permet de retirer la _capabilitiy_ `NET_RAW` (contrôle de la pile réseau).
+* `--cap-drop NET_RAW` permet de retirer la _capabilitiy_ `NET_RAW` aux processus exécutés dans le container (contrôle de la pile réseau).
 
 J'installe `tcpdump` dans le container.
 
