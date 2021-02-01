@@ -133,7 +133,7 @@ docker run --rm -v $PWD:/root/.cache/ aquasec/trivy --severity CRITICAL alpine:3
 
 ## IV) Restrictions de _capabilities_ dans les containers
 
-### IV.1) Capability CHOWN
+### IV.1) Suppressoin de la _capability_ `CHOWN`
 
 Exécutez un container avec l'image `alpine`
 
@@ -157,7 +157,7 @@ Exécutez un container avec l'image `alpine` avec l'option `--cap-drop CHOWN`.
 docker run --rm -it --cap-drop CHOWN alpine /bin/sh
 ```
 
-* `--cap-drop CHOWN` permet de retire les _capabilities_ `CHOWN` (changer de propriétaire).
+* `--cap-drop CHOWN` permet de retirer le _capability_ `CHOWN` (changer le propriétaire d'un fichier).
 
 Quel utilisateur suis-je à l'intérieur du container ?
 Puis-je modifier l'utilisateur propriétaire de `/etc/shadow` ?
@@ -167,7 +167,7 @@ id
 chown nobody /etc/shadow
 ```
 
-### IV.1) Capability NET_RAW
+### IV.1) Suppressoin de la _capability_ `NET_RAW`
 
 Exécutez un container avec l'image `alpine`
 
@@ -190,9 +190,15 @@ tcpdump -i eth0 -vv
 Je ferme `tcpdump` en tapant `Contrôle + C`.
 Je sors du container en tapant `Contrôle + D`.
 
+---
+
+Exécutez un container avec l'image `alpine` avec l'option `--cap-drop NET_RAW`.
+
 ```bash
 docker run --rm -it --cap-drop NET_RAW alpine /bin/sh
 ```
+
+* `--cap-drop NET_RAW` permet de retirer la _capabilitiy_ `NET_RAW` (contrôle de la pile réseau).
 
 J'installe `tcpdump` dans le container.
 
